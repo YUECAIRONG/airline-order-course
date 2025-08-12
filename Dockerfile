@@ -2,12 +2,12 @@
 FROM node:20-alpine AS frontend-builder
 WORKDIR /app
 
-# (关键修复) 先安装 pnpm 工具
-RUN npm install -g pnpm@8.15.3
+# (关键修复) 先安装 pnpm 工具 
+RUN npm install -g pnpm
 
 # 复制依赖描述文件以利用缓存
 COPY frontend/package.json frontend/pnpm-lock.yaml ./ 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 # 复制所有剩余源代码
 COPY frontend/ ./
 RUN pnpm run build
